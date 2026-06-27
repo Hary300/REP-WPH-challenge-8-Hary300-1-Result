@@ -1,13 +1,13 @@
 import { PlayIcon } from 'lucide-react';
 import { Button } from '../button';
+import { getTrailerYoutubeUrl } from '@/lib/utils';
 
 type WatchTrailerProps = {
   videoKey: string;
 };
 
 const WatchTrailer = ({ videoKey }: WatchTrailerProps) => {
-  const baseYoutubeUrl = import.meta.env.VITE_YOUTUBE_BASE_URL;
-  const trailerUrl = `${baseYoutubeUrl}${videoKey}`;
+  const trailerUrl = getTrailerYoutubeUrl(videoKey);
 
   function handleClick(trailerUrl: string) {
     window.open(trailerUrl, 'blank');
