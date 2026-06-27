@@ -67,12 +67,13 @@ export const useSearchMovie = (keyword: string, page: number) => {
 /** ====
  * 5
  =======*/
-export const useMovieFullDetails = (movieId: number) => {
+export const useMovieFullDetails = (movieId?: number) => {
   return useQuery({
-    queryKey: QUERY_KEYS.movies.details(movieId),
+    queryKey: QUERY_KEYS.movies.details(movieId!),
     queryFn: () => {
-      return movieService.getMovieFullDetails(movieId);
+      return movieService.getMovieFullDetails(movieId!);
     },
+    enabled: !!movieId,
   });
 };
 

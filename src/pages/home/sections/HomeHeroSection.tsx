@@ -1,33 +1,55 @@
 import FadeOverlay from '@/components/ui/app-ui/FadeOverlay';
+// import WatchTrailer from '@/components/ui/app-ui/WatchTrailerButton';
 import { Button } from '@/components/ui/button';
+// import { useMovieFullDetails, useTrendingMovies } from '@/hooks/useMovies';
 import { useTrendingMovies } from '@/hooks/useMovies';
 import { IMAGE_SIZES } from '@/lib/constants';
 import { getImageUrl } from '@/lib/utils';
 import { PlayIcon } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 const randomIndex = Math.floor(Math.random() * 20);
 
 const HomeHeroSection = () => {
-  const { data, isLoading, error } = useTrendingMovies('week');
+  const navigate = useNavigate();
+  const {
+    data: trendingData,
+    isLoading: isLoadingTrending,
+    error: errorTrending,
+  } = useTrendingMovies('week');
 
-  if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>{error.message}</p>;
+  const movies = trendingData?.results;
+  const featuredMovie = movies?.[randomIndex];
 
-  const movies = data?.results;
+  // const {
+  //   data: detailData,
+  //   isLoading: isLoadingDetail,
+  //   error: errorDetail,
+  // } = useMovieFullDetails(featuredMovie?.id);
 
-  if (!movies) return null;
+  // if (!detailData?.videoKey) return null;
 
-  const oneMovie = movies[randomIndex];
-  const path = oneMovie.backdrop_path;
+  // if (isLoadingTrending || isLoadingDetail) return <p>Loading...</p>;
+  if (isLoadingTrending) return <p>Loading...</p>;
+  if (errorTrending) return <p>{errorTrending.message}</p>;
+  // if (errorDetail) return <p>{errorDetail.message}</p>;
 
+  const path = featuredMovie?.backdrop_path;
   if (!path) return null;
+
   const size = IMAGE_SIZES.backdrop.medium;
   const backdropImage = getImageUrl(path, size);
+
+  function handleDetailClick(movieId: number) {
+    console.log(movieId);
+    navigate(`/movieDetail/${movieId}`);
+  }
+
   return (
     <section id='hero-home-page' className='relative'>
       <div className='relative h-98 lg:h-auto -z-1'>
         <img
           src={backdropImage}
-          alt={`${oneMovie.title} image`}
+          alt={`${featuredMovie.title} image`}
           className='size-full object-center object-cover'
         />
         <FadeOverlay
@@ -38,17 +60,23 @@ const HomeHeroSection = () => {
       <div className='flex flex-col gap-3xl lg:gap-6xl px-4 lg:p-0 -mt-42.25 lg:mt-0 lg:absolute lg:top-74.5 lg:left-8xl xl:left-11xl max-w-170 mx-auto'>
         <div className='flex flex-col gap-sm'>
           <h1 className='font-bold text-display-xs lg:text-display-2xl'>
-            {oneMovie.title}
+            {featuredMovie.title}
           </h1>
           <p className='text-sm text-neutral-400 lg:text-md line-clamp-3'>
-            {oneMovie.overview}
+            {featuredMovie.overview}
           </p>
         </div>
         <div className='flex flex-col md:flex-row gap-xl lg:max-w-119 '>
+          {/* <WatchTrailer videoKey={detailData.videoKey} /> */}
           <Button>
             Watch Trailer <PlayIcon />
           </Button>
-          <Button variant={'outline'}>See Detail</Button>
+          <Button
+            variant={'outline'}
+            onClick={() => handleDetailClick(featuredMovie.id)}
+          >
+            See Detail
+          </Button>
         </div>
       </div>
     </section>
