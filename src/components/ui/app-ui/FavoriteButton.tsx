@@ -1,10 +1,37 @@
 import { HeartIcon } from 'lucide-react';
 import { Button } from '../button';
+import type { ComponentProps } from 'react';
+import { cn } from '@/lib/utils';
+import { useMovieStore } from '@/store/useMovieStore';
+import type { MovieFullDetails } from '@/types/movie';
 
-const FavoriteButton = () => {
+type FavoriteButtonProps = ComponentProps<typeof Button> & {
+  data: MovieFullDetails;
+  className?: string;
+};
+
+const FavoriteButton = ({ data, className, ...props }: FavoriteButtonProps) => {
+  const favorite = useMovieStore((state) => state.favorite);
+  const addFavorite = useMovieStore((state) => state.addFavorite);
+  const removeFavorite = useMovieStore((state) => state.removeFavorite);
+
+  const isFavorite = favorite.some(
+    (movie) => movie.detail.id === data.detail.id
+  );
   return (
-    <Button className='size-11 lg:size-13 rounded-full border bg-neutral-950/60 flex justify-center items-center shrink-0 cursor-pointer'>
-      <HeartIcon className='size-6 text-neutral-400' />
+    <Button
+      onClick={() =>
+        isFavorite ? removeFavorite(data.detail.id) : addFavorite(data)
+      }
+      className={cn(
+        'size-11 lg:size-13 rounded-full border bg-neutral-950/60 flex justify-center items-center shrink-0 cursor-pointer',
+        className
+      )}
+      {...props}
+    >
+      <HeartIcon
+        className={`size-6 text-neutral-400 ${isFavorite ? 'text-primary-300 fill-primary-300' : ''}`}
+      />
     </Button>
   );
 };

@@ -16,7 +16,7 @@ const FadeOverlay = ({ position, className }: FadeOverlayProps) => {
   return (
     <div
       className={cn(
-        'absolute from-black to-transparent',
+        'absolute from-black to-transparent pointer-events-none',
         positionClasses[position],
         className
       )}

@@ -10,16 +10,17 @@ const MovieDetailPage = () => {
   const { data, isLoading, error } = useMovieFullDetails(Number(id));
 
   if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>{error.message}</p>;
-  if (!data || !data.ageLimit || !data.videoKey) return null;
+  if (error) return <p>{error.message} Error</p>;
+  if (!data) return <p>no video</p>;
   return (
     <MainLayout>
       <main className='flex flex-col gap-3xl'>
         <HeroSection
-          detail={data.detail}
-          genre={data.genre}
-          ageLimit={data.ageLimit}
-          videoKey={data.videoKey}
+          data={data}
+          // detail={data.detail}
+          // genre={data.genre}
+          // ageLimit={data.ageLimit}
+          // videoKey={data.videoKey}
         />
         <OverviewSection overview={data?.detail.overview} />
         <CastSection cast={data.cast} />

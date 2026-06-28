@@ -82,8 +82,8 @@ export interface MovieDetailResponse extends BaseMovie {
 
 export interface MovieFullDetails {
   detail: MovieDetailResponse;
-  genre: string;
-  ageLimit: string | undefined;
+  genre: string | 'Unknown';
+  ageLimit: string | 'N/A';
   cast: CreditsResponse['cast'];
   videoKey: string | undefined;
 }

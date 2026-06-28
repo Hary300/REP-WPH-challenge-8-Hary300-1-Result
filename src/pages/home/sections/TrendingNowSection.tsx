@@ -19,12 +19,12 @@ const TrendingNowSection = () => {
       id='trending-now-home-page'
       className='py-5xl flex flex-col gap-3xl lg:gap-5xl'
     >
-      <div className='lg:px-8xl xl:px-11xl'>
+      <div className='px-xl lg:px-8xl xl:px-11xl'>
         <h2 className='font-bold text-display-xs lg:text-display-lg'>
           Trending Now
         </h2>
       </div>
-      <div className='relative flex'>
+      <div className='relative flex overflow-x-hidden'>
         <Carousel
           opts={{
             align: 'start',

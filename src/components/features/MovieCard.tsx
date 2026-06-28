@@ -1,5 +1,6 @@
 import type { SearchMovieItem } from '@/types/movie';
 import { StarIcon } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 type MovieCardProps = {
   movie: SearchMovieItem;
@@ -8,8 +9,16 @@ type MovieCardProps = {
 };
 
 const MovieCard = ({ movie, imageUrl, index }: MovieCardProps) => {
+  const navigate = useNavigate();
+
+  function handleDetailClick(movieId: number) {
+    navigate(`/movieDetail/${movieId}`);
+  }
   return (
-    <div>
+    <div
+      className='py-1.5 cursor-pointer transition-transform duration-300 hover:scale-102'
+      onClick={() => handleDetailClick(movie.id)}
+    >
       <div className='relative rounded-md overflow-hidden'>
         <img src={imageUrl} alt={`${movie.title} image`} />
         {index && (

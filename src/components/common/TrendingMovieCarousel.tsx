@@ -10,7 +10,7 @@ type TrendingMovieCarouselProps = {
 
 const TrendingMovieCarousel = ({ movies }: TrendingMovieCarouselProps) => {
   return (
-    <CarouselContent className='px-4 lg:px-0'>
+    <CarouselContent className='px-4 lg:px-0 '>
       {movies.map((movie, index) => {
         const size = IMAGE_SIZES.poster.medium;
         const path = movie.poster_path;

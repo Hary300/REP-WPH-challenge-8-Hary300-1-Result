@@ -40,7 +40,6 @@ const HomeHeroSection = () => {
   const backdropImage = getImageUrl(path, size);
 
   function handleDetailClick(movieId: number) {
-    console.log(movieId);
     navigate(`/movieDetail/${movieId}`);
   }
 

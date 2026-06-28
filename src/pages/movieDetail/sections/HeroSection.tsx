@@ -4,35 +4,32 @@ import FadeOverlay from '@/components/ui/app-ui/FadeOverlay';
 import { statsConfig } from '@/config/stats.config';
 import { IMAGE_SIZES } from '@/lib/constants';
 import { getFormattedDate, getImageUrl } from '@/lib/utils';
-import type { MovieDetailResponse } from '@/types/movie';
+// import type { MovieDetailResponse, MovieFullDetails } from '@/types/movie';
+import type { MovieFullDetails } from '@/types/movie';
 
 type HeroSectionProps = {
-  detail: MovieDetailResponse;
-  genre: string;
-  ageLimit: string;
-  videoKey: string;
+  // detail: MovieDetailResponse;
+  // genre: string;
+  // ageLimit: string;
+  // videoKey: string | undefined;
+  data: MovieFullDetails;
 };
 
-const HeroSection = ({
-  detail,
-  genre,
-  ageLimit,
-  videoKey,
-}: HeroSectionProps) => {
+const HeroSection = ({ data }: HeroSectionProps) => {
   const backdropSize = IMAGE_SIZES.backdrop.medium;
   const posterSize = IMAGE_SIZES.poster.medium;
-  const backdropPath = detail.backdrop_path;
-  const posterPath = detail.poster_path;
+  const backdropPath = data.detail.backdrop_path;
+  const posterPath = data.detail.poster_path;
   if (!backdropPath) return null;
   if (!posterPath) return null;
   const backdropImageUrl = getImageUrl(backdropPath, backdropSize);
   const posterImageUrl = getImageUrl(posterPath, posterSize);
-  const formattedDate = getFormattedDate(detail.release_date);
+  const formattedDate = getFormattedDate(data.detail.release_date);
 
   const statsValue = {
-    rating: detail.vote_average,
-    genre: genre,
-    ageLimit: ageLimit,
+    rating: data.detail.vote_average,
+    genre: data.genre,
+    ageLimit: data.ageLimit,
   };
 
   const stats = statsConfig.map((item) => ({
@@ -45,7 +42,7 @@ const HeroSection = ({
       <div className='relative w-full h-98 lg:h-202.5 -z-1'>
         <img
           src={backdropImageUrl}
-          alt={`${detail.title} image`}
+          alt={`${data.detail.title} image`}
           className='size-full object-cover object-center'
         />
         <FadeOverlay
@@ -55,10 +52,11 @@ const HeroSection = ({
       </div>
       <Container>
         <MovieDetailGrid
-          detail={detail}
-          formattedDate={formattedDate}
+          // detail={data.detail}
+          // videoKey={data.videoKey}
+          data={data}
           posterImageUrl={posterImageUrl}
-          videoKey={videoKey}
+          formattedDate={formattedDate}
           stats={stats}
         />
       </Container>
