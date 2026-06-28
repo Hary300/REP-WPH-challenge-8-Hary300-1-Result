@@ -1,14 +1,10 @@
+import MovieDetailGrid from '@/components/features/MovieDetailGrid';
+import Container from '@/components/layouts/Container';
 import FadeOverlay from '@/components/ui/app-ui/FadeOverlay';
-import FavoriteButton from '@/components/ui/app-ui/FavoriteButton';
-import WatchTrailer from '@/components/ui/app-ui/WatchTrailerButton';
+import { statsConfig } from '@/config/stats.config';
 import { IMAGE_SIZES } from '@/lib/constants';
-import {
-  getFormattedDate,
-  getImageUrl,
-  getTrailerYoutubeUrl,
-} from '@/lib/utils';
+import { getFormattedDate, getImageUrl } from '@/lib/utils';
 import type { MovieDetailResponse } from '@/types/movie';
-import { Calendar1Icon } from 'lucide-react';
 
 type HeroSectionProps = {
   detail: MovieDetailResponse;
@@ -16,6 +12,7 @@ type HeroSectionProps = {
   ageLimit: string;
   videoKey: string;
 };
+
 const HeroSection = ({
   detail,
   genre,
@@ -31,9 +28,21 @@ const HeroSection = ({
   const backdropImageUrl = getImageUrl(backdropPath, backdropSize);
   const posterImageUrl = getImageUrl(posterPath, posterSize);
   const formattedDate = getFormattedDate(detail.release_date);
+
+  const statsValue = {
+    rating: detail.vote_average,
+    genre: genre,
+    ageLimit: ageLimit,
+  };
+
+  const stats = statsConfig.map((item) => ({
+    ...item,
+    value: statsValue[item.key],
+  }));
+
   return (
     <section id='hero-detail-page'>
-      <div className='relative w-full h-98 lg:h-auto -z-1'>
+      <div className='relative w-full h-98 lg:h-202.5 -z-1'>
         <img
           src={backdropImageUrl}
           alt={`${detail.title} image`}
@@ -44,25 +53,15 @@ const HeroSection = ({
           className='h-55.25 lg:h-auto lg:inset-y-0'
         />
       </div>
-      <div className='grid grid-cols-[auto_1fr] px-xl gap-x-xl gap-y-3xl'>
-        <div className='max-w-29 rounded-xl overflow-hidden lg:max-w-65'>
-          <img src={posterImageUrl} alt={`${detail.title} poster`} />
-        </div>
-        <div className='flex flex-col gap-xs lg:gap-4xl'>
-          <p className='font-bold text-xl lg:text-display-xl'>{detail.title}</p>
-          <p className='flex text-sm gap-xs items-center lg:text-md'>
-            <Calendar1Icon />
-            {formattedDate}
-          </p>
-        </div>
-        <div className='flex gap-xl col-span-2 items-center'>
-          <WatchTrailer videoKey={videoKey} />
-          <FavoriteButton />
-        </div>
-        <div>
-          <div></div>
-        </div>
-      </div>
+      <Container>
+        <MovieDetailGrid
+          detail={detail}
+          formattedDate={formattedDate}
+          posterImageUrl={posterImageUrl}
+          videoKey={videoKey}
+          stats={stats}
+        />
+      </Container>
     </section>
   );
 };

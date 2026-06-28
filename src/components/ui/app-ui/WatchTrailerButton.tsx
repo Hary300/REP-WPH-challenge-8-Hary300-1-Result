@@ -6,7 +6,7 @@ type WatchTrailerProps = {
   videoKey: string;
 };
 
-const WatchTrailer = ({ videoKey }: WatchTrailerProps) => {
+const WatchTrailerButton = ({ videoKey }: WatchTrailerProps) => {
   const trailerUrl = getTrailerYoutubeUrl(videoKey);
 
   function handleClick(trailerUrl: string) {
@@ -19,4 +19,4 @@ const WatchTrailer = ({ videoKey }: WatchTrailerProps) => {
   );
 };
 
-export default WatchTrailer;
+export default WatchTrailerButton;
