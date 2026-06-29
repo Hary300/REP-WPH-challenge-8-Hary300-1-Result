@@ -5,12 +5,25 @@ import CastSection from './sections/CastSection';
 import { useMovieFullDetails } from '@/hooks/useMovies';
 import { useParams } from 'react-router-dom';
 import { Toaster } from 'sonner';
+import HeroSectionSkeleton from './sections/HeroSectionSkeleton';
+import OverviewSectionSkeleton from './sections/OverviewSectionSkeleton';
+import CastSectionSkeleton from './sections/CastSectionSkeleton';
 
 const MovieDetailPage = () => {
   const { id } = useParams();
   const { data, isLoading, error } = useMovieFullDetails(Number(id));
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading)
+    return (
+      <MainLayout>
+        <main className='flex flex-col gap-3xl'>
+          <HeroSectionSkeleton />
+          <OverviewSectionSkeleton />
+          <CastSectionSkeleton />
+        </main>
+      </MainLayout>
+    );
+
   if (error) return <p>{error.message} Error</p>;
   if (!data) return <p>no video</p>;
   return (

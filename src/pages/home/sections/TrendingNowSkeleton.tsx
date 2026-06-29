@@ -9,9 +9,9 @@ const TrendingNowSkeleton = () => {
       className='py-5xl flex flex-col gap-3xl lg:gap-5xl'
     >
       <div className='px-xl lg:px-8xl xl:px-11xl'>
-        <Skeleton className='h-9 w-70 lg:h-15  rounded-full' />
+        <Skeleton className='h-7 w-45 lg:h-12 lg:w-65 rounded-full' />
       </div>
-      <div className='relative flex overflow-x-hidden gap-xl lg:gap-2xl'>
+      <div className='relative flex overflow-x-hidden gap-xl lg:gap-2xl px-xl lg:px-0'>
         {Array.from({ length: 15 }).map((_, index) => (
           <div key={index} className='min-w-43.25 lg:min-w-54'>
             <MovieCardSkeleton />

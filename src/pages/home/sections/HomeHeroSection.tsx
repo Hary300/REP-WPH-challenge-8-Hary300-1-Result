@@ -34,7 +34,7 @@ const HomeHeroSection = () => {
 
   return (
     <section id='hero-home-page' className='relative'>
-      <div className='relative h-98 lg:h-auto -z-1'>
+      <div className='relative h-98 lg:h-150 -z-1'>
         <img
           src={backdropImage}
           alt={`${featuredMovie.title} image`}
