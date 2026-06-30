@@ -4,7 +4,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 const HeroSectionSkeleton = () => {
   return (
-    <section id='hero-detail-page'>
+    <section id='hero-detail-page-skeleton'>
       <div className='relative h-98 md:h-202.5 -z-1'>
         <Skeleton className='size-full bg-zinc-900 rounded-none' />
         <FadeOverlay

@@ -8,12 +8,15 @@ import { getImageUrl } from '@/lib/utils/getImageUrl';
 import type { MovieFullDetails } from '@/types/movie';
 import { motion } from 'framer-motion';
 import { fadeIn } from '@/motions';
+import { useState } from 'react';
+import { Skeleton } from '@/components/ui/skeleton';
 
 type HeroSectionProps = {
   data: MovieFullDetails;
 };
 
 const HeroSection = ({ data }: HeroSectionProps) => {
+  const [imageLoaded, setImageLoaded] = useState(false);
   const backdropSize = IMAGE_SIZES.backdrop.medium;
   const posterSize = IMAGE_SIZES.poster.medium;
   const backdropPath = data.detail.backdrop_path;
@@ -43,10 +46,14 @@ const HeroSection = ({ data }: HeroSectionProps) => {
         initial='hidden'
         animate='visible'
       >
+        {!imageLoaded && (
+          <Skeleton className='size-full bg-zinc-900 rounded-none' />
+        )}
         <img
           src={backdropImageUrl}
           alt={`${data.detail.title} image`}
-          className='size-full object-cover object-center'
+          onLoad={() => setImageLoaded(true)}
+          className={`size-full object-cover object-center ${imageLoaded ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
         />
         <FadeOverlay
           position='bottom'
